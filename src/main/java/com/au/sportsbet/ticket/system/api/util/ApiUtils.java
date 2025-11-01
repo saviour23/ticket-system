@@ -1,0 +1,25 @@
+package com.au.sportsbet.ticket.system.api.util;
+
+import com.au.sportsbet.ticket.system.api.constants.ApiConstant;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
+import org.springframework.util.ObjectUtils;
+
+import java.util.UUID;
+
+@Slf4j
+public class ApiUtils {
+    public static String getCorrelationId() {
+
+        String correlationId = MDC.get(ApiConstant.CORRELATION_ID);
+
+        if (ObjectUtils.isEmpty(correlationId)) {
+
+            correlationId = UUID.randomUUID().toString();
+            MDC.put(ApiConstant.CORRELATION_ID, correlationId);
+        }
+
+        return correlationId;
+
+    }
+}

@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: Ticket System API
+
+  profiles:
+    active: dev
+
+  main:
+    banner-mode: console
+    log-startup-info: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+server:
+  port: 8080      # default application port
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,metrics,loggers
+  endpoint:
+    health:
+      show-details: always
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 8090          # actuator runs on this port
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+logging:
+  level:
+    root: ERROR
+    com.au.sportsbet: DEBUG
