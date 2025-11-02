@@ -11,7 +11,6 @@ This project use Maven for build and dependency management.
 mvn clean install
 ```
 
-
 ## Start the Server
 
 ```bash
@@ -34,6 +33,16 @@ Transaction API will respond with the following information.
 1) The ID of the transaction
 2) Each individual type of movie ticket present in that transaction, ordered alphabetically, and it's quantity and total cost
 3) The total cost of all movie tickets for that transaction.
+
+## Spring Boot Actuator
+
+### Service Health
+Spring Boot Actuator is running on 8090 port and following URL can be used to check the health
+http://localhost:8090/actuator/health
+
+### Service GIT info
+Git info can be fetched using below URL
+http://localhost:8090/actuator/info
 
 ### Sample Request:
 ```dtd
@@ -92,6 +101,7 @@ Transaction API will respond with the following information.
 
 
 ```
+
 ## Test Coverage
 
 **Total Test coverage = 100%.**

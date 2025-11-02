@@ -9,15 +9,12 @@ spring:
   web:
     resources:
       add-mappings: false
-server:
-  port: 8080      # default application port
 
-  # ==========================
-  # Enable Virtual Threads
-  # ==========================
   threads:
     virtual:
-      enabled: true
+      enabled: true #enabled virtual threads
+server:
+  port: 8080      # default application port
 
 # ==========================
 # Spring MVC / Actuator configuration
