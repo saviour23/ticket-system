@@ -48,6 +48,7 @@ public class GlobalExceptionHandler {
         error.put("error", "Invalid input format — please ensure all fields are correctly typed.");
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
     /**
      * Handle 404 - Invalid URL / No handler found
      */
