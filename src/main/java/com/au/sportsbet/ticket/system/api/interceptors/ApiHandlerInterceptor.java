@@ -1,5 +1,6 @@
 package com.au.sportsbet.ticket.system.api.interceptors;
 
+import com.au.sportsbet.ticket.system.api.constants.ApiConstant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class ApiHandlerInterceptor implements HandlerInterceptor {
 
         long currentTime = Instant.now().toEpochMilli();
 
-        request.setAttribute("startTime", currentTime);
+        request.setAttribute(ApiConstant.START_TIME, currentTime);
 
         log.info("Incoming Request: method = {}, URI= {}, timestamp={}", request.getMethod(),
                 request.getRequestURI(), currentTime);
@@ -31,7 +32,7 @@ public class ApiHandlerInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception ex) throws Exception {
 
-        long duration = System.currentTimeMillis() - (long) request.getAttribute("startTime");
+        long duration = System.currentTimeMillis() - (long) request.getAttribute(ApiConstant.START_TIME);
 
         if (ex != null) {
             log.error("Exception in request, method= {}, URI= {}, timeTaken= {}",

@@ -1,5 +1,6 @@
 package com.au.sportsbet.ticket.system.api.controller;
 
+import com.au.sportsbet.ticket.system.api.constants.ApiConstant;
 import com.au.sportsbet.ticket.system.api.dto.TransactionRequest;
 import com.au.sportsbet.ticket.system.api.dto.TransactionResponse;
 import com.au.sportsbet.ticket.system.api.service.TransactionService;
@@ -26,7 +27,7 @@ public class TicketTransactionController {
     }
 
     @PostMapping
-    @RequestMapping("/api/transactions")
+    @RequestMapping(ApiConstant.TRANSACTION_ENDPOINT)
     public TransactionResponse process(@Valid @RequestBody TransactionRequest request) {
 
         boolean isVirtual = Thread.currentThread().isVirtual();

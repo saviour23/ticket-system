@@ -38,7 +38,7 @@ management:
       exposure:
         include: "*"
   server:
-    port: 8090          # actuator runs on this port
+    port: 8080          # actuator port
   health:
     livenessstate:
       enabled: true

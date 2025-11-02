@@ -1,6 +1,6 @@
 package com.au.sportsbet.ticket.system.api.config;
 
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import com.au.sportsbet.ticket.system.api.constants.ApiConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +8,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Security config class to allow required URL only.
+ * It will
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -18,10 +22,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+                                // Allow access to actuator endpoints
+                                .requestMatchers(ApiConstant.ACTUATOR_ENDPOINTS).permitAll()
 
                                 // Allow access to the specific API URL
-                                .requestMatchers("/api/transactions").permitAll()
+                                .requestMatchers(ApiConstant.TRANSACTION_ENDPOINT).permitAll()
 
                                 .anyRequest().authenticated()
                 );

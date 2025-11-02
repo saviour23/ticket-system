@@ -37,12 +37,12 @@ Transaction API will respond with the following information.
 ## Spring Boot Actuator
 
 ### Service Health
-Spring Boot Actuator is running on 8090 port and following URL can be used to check the health
-http://localhost:8090/actuator/health
+Spring Boot Actuator is running on 8080 port and following URL can be used to check the health
+http://localhost:8080/actuator/health
 
 ### Service GIT info
 Git info can be fetched using below URL
-http://localhost:8090/actuator/info
+http://localhost:8080/actuator/info
 
 ### Sample Request:
 ```dtd
