@@ -9,7 +9,18 @@ import java.math.BigDecimal;
  * Ticket price interface, following the Strategy design pattern.
  */
 public interface TicketPricingStrategy {
-  TicketType getTicketType();
+    /**
+     * Method to get the Ticket Type
+     *
+     * @return {@link TicketType}
+     */
+    TicketType getTicketType();
 
-  BigDecimal calculatePrice(Customer customer);
+    /**
+     * Method to calculate the price for each customer type.
+     *
+     * @param customer {@link Customer}
+     * @return calculated price.
+     */
+    BigDecimal calculatePrice(Customer customer);
 }

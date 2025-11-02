@@ -7,6 +7,9 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.UUID;
 
+/**
+ * Utility class for any static data response.
+ */
 @Slf4j
 public final class ApiUtils {
     public static String getCorrelationId() {

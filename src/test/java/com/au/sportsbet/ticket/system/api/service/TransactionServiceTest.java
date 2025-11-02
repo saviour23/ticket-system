@@ -40,7 +40,7 @@ class TransactionServiceTest {
     private ToCustomerMapper mapper;
 
     @Test
-    void testProcessTransaction_singleAdult() {
+    void testCalculateTotalCostForTransaction_singleAdult() {
 
 
         Mockito.when(adultStrategy.calculatePrice(any())).thenReturn(new BigDecimal("25.00"));
@@ -60,7 +60,7 @@ class TransactionServiceTest {
         Mockito.when(mapper.mapToCustomer(Mockito.any())).thenReturn(customer);
 
 
-        TransactionResponse response = transactionService.processTransaction(request);
+        TransactionResponse response = transactionService.calculateTotalCostForTransaction(request);
 
         assertEquals(1L, response.transactionId());
         assertEquals(1, response.tickets().size());
@@ -72,7 +72,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    void testProcessTransaction_childrenDiscount() {
+    void testCalculateTotalCostForTransaction_childrenDiscount() {
 
 
         Mockito.when(childrenStrategy.calculatePrice(any())).thenReturn(new BigDecimal("5.00"));
@@ -98,7 +98,7 @@ class TransactionServiceTest {
 
         TransactionRequest request = new TransactionRequest(2L, List.of(c1, c2, c3));
 
-        TransactionResponse response = transactionService.processTransaction(request);
+        TransactionResponse response = transactionService.calculateTotalCostForTransaction(request);
 
         assertEquals(2L, request.transactionId());
         assertEquals(1, response.tickets().size());
@@ -111,7 +111,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    void testProcessTransaction_SingleAdultWithChildrenDiscount() {
+    void testCalculateTotalCostForTransaction_SingleAdultWithChildrenDiscount() {
 
 
         Mockito.when(adultStrategy.calculatePrice(any())).thenReturn(new BigDecimal("25.00"));
@@ -144,7 +144,7 @@ class TransactionServiceTest {
 
         TransactionRequest request = new TransactionRequest(2L, List.of(a1, c1, c2, c3));
 
-        TransactionResponse response = transactionService.processTransaction(request);
+        TransactionResponse response = transactionService.calculateTotalCostForTransaction(request);
 
         assertEquals(2L, request.transactionId()); // actually 2L here
         assertEquals(2, response.tickets().size());
@@ -163,7 +163,7 @@ class TransactionServiceTest {
 
 
     @Test
-    void testProcessTransaction_SingleSeniorWithChildrenDiscount() {
+    void testCalculateTotalCostForTransaction_SingleSeniorWithChildrenDiscount() {
 
 
         Mockito.when(seniorStrategy.calculatePrice(any())).thenReturn(new BigDecimal("17.50"));
@@ -193,7 +193,7 @@ class TransactionServiceTest {
 
         TransactionRequest request = new TransactionRequest(2L, List.of(a1, c1, c2, c3));
 
-        TransactionResponse response = transactionService.processTransaction(request);
+        TransactionResponse response = transactionService.calculateTotalCostForTransaction(request);
 
         assertEquals(2L, request.transactionId());
         assertEquals(2, response.tickets().size());
@@ -212,7 +212,7 @@ class TransactionServiceTest {
 
 
     @Test
-    void testProcessTransaction_singleTeen() {
+    void testCalculateTotalCostForTransaction_singleTeen() {
 
         Mockito.when(teenStrategy.calculatePrice(any())).thenReturn(new BigDecimal("12.00"));
         Mockito.when(teenStrategy.getTicketType()).thenReturn(TicketType.TEEN);
@@ -229,7 +229,7 @@ class TransactionServiceTest {
         Mockito.when(mapper.mapToCustomer(Mockito.any())).thenReturn(teenCustomer);
 
 
-        TransactionResponse response = transactionService.processTransaction(request);
+        TransactionResponse response = transactionService.calculateTotalCostForTransaction(request);
 
         assertEquals(1L, response.transactionId());
         assertEquals(1, response.tickets().size());
@@ -242,7 +242,7 @@ class TransactionServiceTest {
 
 
     @Test
-    void testProcessTransaction_allCustomerType() {
+    void testCalculateTotalCostForTransaction_allCustomerType() {
 
         Mockito.when(teenStrategy.calculatePrice(any())).thenReturn(new BigDecimal("12.00"));
         Mockito.when(teenStrategy.getTicketType()).thenReturn(TicketType.TEEN);
@@ -287,7 +287,7 @@ class TransactionServiceTest {
                 .thenReturn(customer1).thenReturn(customer2).thenReturn(customer3).thenReturn(adultCustomer);
 
 
-        TransactionResponse response = transactionService.processTransaction(request);
+        TransactionResponse response = transactionService.calculateTotalCostForTransaction(request);
 
 
         assertEquals(1L, response.transactionId());
@@ -324,7 +324,7 @@ class TransactionServiceTest {
 
 
     @Test
-    void testProcessTransaction_invalidRequest() {
+    void testCalculateTotalCostForTransaction_invalidRequest() {
 
         Mockito.when(adultStrategy.calculatePrice(any())).thenReturn(null);
         Mockito.when(adultStrategy.getTicketType()).thenReturn(TicketType.ADULT);
@@ -341,7 +341,7 @@ class TransactionServiceTest {
         Customer customer = new Customer("John wick", 30);
         Mockito.when(mapper.mapToCustomer(Mockito.any())).thenReturn(customer);
 
-        Assertions.assertThrows(TransactionException.class, () -> transactionService.processTransaction(request));
+        Assertions.assertThrows(TransactionException.class, () -> transactionService.calculateTotalCostForTransaction(request));
     }
 
 

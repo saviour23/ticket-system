@@ -92,4 +92,10 @@ Transaction API will respond with the following information.
 
 
 ```
+## Test Coverage
 
+**Total Test coverage = 100%.**
+
+Note: DTO, Model and exception packages are excluded from coverage in POM.
+
+![testCoverage.png](testCoverage.png)

@@ -9,8 +9,6 @@ import com.au.sportsbet.ticket.system.api.model.Customer;
 import com.au.sportsbet.ticket.system.api.model.TicketType;
 import com.au.sportsbet.ticket.system.api.service.pricing.TicketPricingStrategy;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,6 @@ import java.util.*;
 @Service
 @Slf4j
 public class TransactionService {
-    private static final Logger log = LoggerFactory.getLogger(TransactionService.class);
 
     private ToCustomerMapper customerMapper;
 
@@ -40,12 +37,21 @@ public class TransactionService {
                     pricingStrategies.put(strategy.getTicketType(), strategy);
                 });
 
-        this.customerMapper =customerMapper;
+        this.customerMapper = customerMapper;
     }
 
-    public TransactionResponse processTransaction(TransactionRequest request) throws TransactionException {
+    /**
+     * Method to process the input transaction request and calculate the prices.
+     *
+     * @param request input request {@link TransactionRequest}
+     * @return Response. {@link TransactionResponse}
+     * @throws exception {@link TransactionException}
+     */
+    public TransactionResponse calculateTotalCostForTransaction(TransactionRequest request) throws TransactionException {
 
         try {
+
+            log.info("Processing Transaction for transactionId = {}", request.transactionId());
             Map<TicketType, List<Customer>> groupedCustomer = new HashMap<>();
 
             // grouping the customers based on Ticket Type
@@ -75,11 +81,13 @@ public class TransactionService {
 
                 subtotal = subtotal.setScale(2, RoundingMode.HALF_UP);
                 summaries.add(new TicketSummary(type.getName(), customers.size(), subtotal));
+                log.debug("Sub total for the transactionId= {}, ticketType={}, is= {}", request.transactionId(), type.getName(), subtotal);
 
                 totalCost = totalCost.add(subtotal);
             }
 
             summaries.sort(Comparator.comparing(TicketSummary::ticketType));
+            log.info("Total price calculation complete for transactionId= {} is= {}", request.transactionId(), totalCost);
             return new TransactionResponse(request.transactionId(), summaries, totalCost);
         } catch (Exception e) {
             String errorMessage = "Error in Transaction Service, error= " + e.getMessage();

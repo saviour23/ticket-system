@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.MDC;
 
+import java.lang.reflect.Constructor;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,6 +46,13 @@ public class ApiUtilsTest {
         String correlationId2 = ApiUtils.getCorrelationId();
         Assertions.assertEquals(correlationId1, correlationId2);
 
+    }
+
+    @Test
+    void testPrivateConstructor() throws Exception {
+        Constructor<ApiUtils> constructor = ApiUtils.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        Assertions.assertNotNull(constructor.newInstance());
     }
 
 }

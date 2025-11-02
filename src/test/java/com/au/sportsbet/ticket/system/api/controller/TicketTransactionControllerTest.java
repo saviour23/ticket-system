@@ -46,7 +46,7 @@ class TicketTransactionControllerTest {
 
         TicketSummary summary = new TicketSummary("Adult", 1, BigDecimal.valueOf(10.00));
         response = new TransactionResponse(1L, List.of(summary), BigDecimal.valueOf(10.00));
-        Mockito.when(transactionService.processTransaction(Mockito.any(TransactionRequest.class)))
+        Mockito.when(transactionService.calculateTotalCostForTransaction(Mockito.any(TransactionRequest.class)))
                 .thenReturn(response);
 
         mockMvc.perform(post("/api/transactions")
@@ -69,7 +69,7 @@ class TicketTransactionControllerTest {
 
         request = new TransactionRequest(1L, List.of(customer));
 
-        Mockito.when(transactionService.processTransaction(Mockito.any(TransactionRequest.class)))
+        Mockito.when(transactionService.calculateTotalCostForTransaction(Mockito.any(TransactionRequest.class)))
                 .thenReturn(response);
 
         MvcResult result = mockMvc.perform(post("/api/transactions")
