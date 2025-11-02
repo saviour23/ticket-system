@@ -19,6 +19,7 @@
 		<lombok.version>1.18.42</lombok.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<google.formatter.version>1.31.0</google.formatter.version>
+        <jacoco-maven-plugin-version>0.8.13</jacoco-maven-plugin-version>
 	</properties>
 
 	<dependencies>
@@ -106,12 +107,54 @@
                 <version>4.0.4</version>
                 <executions>
                     <execution>
+                        <id>get-the-git-infos</id>
                         <goals>
                             <goal>revision</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <!-- ensures the file goes where Spring Boot can read it -->
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin-version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/TicketSystemApiApplication*</exclude>
+                        <exclude>**/config/*</exclude>
+                        <exclude>**/constants/*</exclude>
+                        <exclude>**/dto/*</exclude>
+                        <exclude>**/interceptors/*</exclude>
+                        <exclude>**/service/pricing/*</exclude>
+                        <exclude>**/model/*</exclude>
+                        <exclude>**/exception/*</exclude>
+                        <exclude>**/mapper/*</exclude>
+                        <exclude>**/filter/*</exclude>
+                    </excludes>
+
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
 		</plugins>
 	</build>
 

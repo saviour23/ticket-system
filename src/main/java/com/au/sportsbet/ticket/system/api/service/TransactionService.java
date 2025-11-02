@@ -25,20 +25,22 @@ import java.util.*;
 @Slf4j
 public class TransactionService {
     private static final Logger log = LoggerFactory.getLogger(TransactionService.class);
-    @Autowired
-    ToCustomerMapper customerMapper;
+
+    private ToCustomerMapper customerMapper;
 
     private final Map<TicketType, TicketPricingStrategy> pricingStrategies;
 
 
     @Autowired
-    public TransactionService(List<TicketPricingStrategy> strategies) {
+    public TransactionService(List<TicketPricingStrategy> strategies, ToCustomerMapper customerMapper) {
         pricingStrategies = new HashMap<>();
         // populating strategies map
         strategies.forEach(
                 strategy -> {
                     pricingStrategies.put(strategy.getTicketType(), strategy);
                 });
+
+        this.customerMapper =customerMapper;
     }
 
     public TransactionResponse processTransaction(TransactionRequest request) throws TransactionException {

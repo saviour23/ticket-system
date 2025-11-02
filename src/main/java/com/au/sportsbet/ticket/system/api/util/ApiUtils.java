@@ -8,7 +8,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.UUID;
 
 @Slf4j
-public class ApiUtils {
+public final class ApiUtils {
     public static String getCorrelationId() {
 
         String correlationId = MDC.get(ApiConstant.CORRELATION_ID);

@@ -16,11 +16,22 @@ spring:
 server:
   port: 8080      # default application port
 
+
+# ==========================
+# Spring MVC / Actuator configuration
+# ==========================
+
 management:
+  info:
+    build:
+      enabled: true
+    git:
+      mode: simple
   endpoints:
     web:
       exposure:
         include: health,info,env,metrics,loggers
+
   endpoint:
     health:
       show-details: always
