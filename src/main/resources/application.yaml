@@ -38,7 +38,7 @@ management:
       exposure:
         include: "*"
   server:
-    port: 8080          # actuator port
+    port: 8080  # actuator port
   health:
     livenessstate:
       enabled: true
@@ -48,4 +48,4 @@ management:
 logging:
   level:
     root: ERROR
-    com.au.sportsbet: DEBUG
+    com.au.sb: DEBUG
