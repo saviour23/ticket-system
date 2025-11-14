@@ -10,7 +10,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ---- Stage 2: Runtime ----
-FROM amazoncorretto:21-alpine
+FROM amazoncorretto:21.0.9-alpine
 
 # Set a non-root user for better security
 RUN adduser -D spring

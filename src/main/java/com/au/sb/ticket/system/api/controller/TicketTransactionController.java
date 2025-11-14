@@ -31,7 +31,7 @@ public class TicketTransactionController {
     public TransactionResponse process(@Valid @RequestBody TransactionRequest request) {
 
         boolean isVirtual = Thread.currentThread().isVirtual();
-        log.info("Received transactions request in controller, running on virtualThread = {}", isVirtual);
+        log.debug("Received transactions request in controller, running on virtualThread = {}", isVirtual);
 
         return transactionService.calculateTotalCostForTransaction(request);
     }
